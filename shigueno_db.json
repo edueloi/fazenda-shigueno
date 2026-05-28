@@ -1,0 +1,159 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "shigueno",
+      "password": "shigueno2026",
+      "name": "Gestão Shigueno",
+      "role": "admin"
+    }
+  ],
+  "vacancies": [
+    {
+      "id": 1,
+      "title": "Tratorista Agrícola",
+      "department": "Citricultura",
+      "description": "Responsável pelo manejo de tratores e implementos nos pomares de citros, pulverização e preparação do solo na Fazenda Nova Aliança.",
+      "location": "Tatuí - SP",
+      "requirements": "Experiência como operador de tratores, CNH categoria C, conhecimento em manutenção preventiva de equipamentos agrícolas.",
+      "status": "Ativa"
+    },
+    {
+      "id": 2,
+      "title": "Auxiliar de Avicultura",
+      "department": "Avicultura",
+      "description": "Atuar na coleta seletiva de ovos, triagem inicial por qualidade, alimentação e verificação das instalações dos galpões de postura.",
+      "location": "Tatuí - SP",
+      "requirements": "Ensino fundamental completo, proatividade, disposição para trabalhar em ambiente rural e cuidado no manuseio delicado dos produtos.",
+      "status": "Ativa"
+    },
+    {
+      "id": 3,
+      "title": "Campeiro / Tratador de Gado Nelore",
+      "department": "Agropecuária",
+      "description": "Trabalhar na cria e recria do rebanho Nelore, controle de vacinação, alimentação mineral e acompanhamento sanitário nas pastagens.",
+      "location": "Santo Antônio do Leverger - MT",
+      "requirements": "Experiência prévia com manejo de gado de corte, conhecimento básico de medicamentos veterinários e manejo com responsabilidade.",
+      "status": "Ativa"
+    },
+    {
+      "id": 4,
+      "title": "Classificador de Ovos",
+      "department": "Avicultura",
+      "description": "Operar os maquinários de classificação eletrônica, garantindo a divisão precisa entre as classificações Super Extra (Jumbo), Extra, Grande, Médio, Pequeno e Industrial.",
+      "location": "Tatuí - SP",
+      "requirements": "Ensino médio completo, facilidade com painéis de controle, foco em detalhes e boas práticas de higiene alimentar.",
+      "status": "Ativa"
+    }
+  ],
+  "candidates": [
+    {
+      "id": 1,
+      "name": "José Alencar Ramos",
+      "email": "jose.alencar@email.com",
+      "phone": "(15) 99764-5412",
+      "vacancy_id": 1,
+      "cv_text": "Trabalho há mais de 8 anos como tratorista em fazendas de cana e laranja na região de Tatuí e Boituva. Conheço maquinários John Deere e Massey Ferguson. CNH D ativa, curso do Senar de operação de pulverizadores concluído.",
+      "applied_at": "2026-05-25 10:14:00",
+      "status": "Em Análise"
+    },
+    {
+      "id": 2,
+      "name": "Manoel Francisco da Silva",
+      "email": "manoel.nelore@email.com",
+      "phone": "(65) 98112-4433",
+      "vacancy_id": 3,
+      "cv_text": "Campeiro experiente nascido e criado na região do Pantanal. Sei lidar com tropa, aplicar vacinas, tratar bicheiras, marcar e apartar bezerros. Já trabalhei na Fazenda Colorado no MT cuidando de 1200 cabeças de Nelore. Tenho referências na região de Leverger.",
+      "applied_at": "2026-05-27 15:42:00",
+      "status": "Novo"
+    }
+  ],
+  "suppliers": [
+    {
+      "id": 1,
+      "name": "Fazenda Recanto Verde",
+      "city": "Santo Antônio do Leverger",
+      "phone": "(65) 99241-1122",
+      "cattle_count": 420,
+      "cattle_breed": "Nelore Puro",
+      "status": "Ativo",
+      "last_delivery": "2026-04-12"
+    },
+    {
+      "id": 2,
+      "name": "Estância Pantaneira",
+      "city": "Poconé",
+      "phone": "(65) 3345-8899",
+      "cattle_count": 650,
+      "cattle_breed": "Nelore",
+      "status": "Ativo",
+      "last_delivery": "2026-05-02"
+    },
+    {
+      "id": 3,
+      "name": "Sítio Sol Nascente",
+      "city": "Santo Antônio do Leverger",
+      "phone": "(65) 98144-0011",
+      "cattle_count": 180,
+      "cattle_breed": "Nelore / Cruzamento",
+      "status": "Em Negociação",
+      "last_delivery": "2026-02-28"
+    },
+    {
+      "id": 4,
+      "name": "Fazenda Três Corações",
+      "city": "Rondonópolis",
+      "phone": "(66) 3421-5544",
+      "cattle_count": 850,
+      "cattle_breed": "Nelore de Elite",
+      "status": "Ativo",
+      "last_delivery": "2026-05-18"
+    },
+    {
+      "id": 5,
+      "name": "Fazenda Rio Manso",
+      "city": "Cuiabá",
+      "phone": "(65) 99988-7711",
+      "cattle_count": 320,
+      "cattle_breed": "Nelore",
+      "status": "Ativo",
+      "last_delivery": "2026-05-10"
+    },
+    {
+      "id": 6,
+      "name": "Fazenda Novo Progresso",
+      "city": "Cáceres",
+      "phone": "(65) 3223-9911",
+      "cattle_count": 510,
+      "cattle_breed": "Nelore / Angus",
+      "status": "Inativo",
+      "last_delivery": "2025-11-15"
+    }
+  ],
+  "site_settings": [
+    {
+      "key": "company_motto",
+      "value": "Uma empresa sempre preocupada com a qualidade de vida."
+    },
+    {
+      "key": "about_text_intro",
+      "value": "O patriarca da família Shigueno, Sr. Haruo Shigueno chegou ao Brasil em 1932. Na bagagem apenas vontade e determinação."
+    },
+    {
+      "key": "about_text_full",
+      "value": "A princípio se estabeleceu na cidade de Aliança, noroeste do estado de SP, onde foram praticar a cafeicultura, decepcionando-se com o descumprimento do que lhes foi prometido, voltou e estabeleceu-se em Mogi das Cruzes. Numa época em que ninguém ousava criar galinhas comercialmente, Haruo Shigueno com 18 anos, começou a importar incubatórios e produzir pintinhos, dando início na atividade de avicultura na família. Com a expansão dos negócios, os irmãos Shigueno se separaram, ficando um irmão em Mogi das Cruzes e Haruo foi para São José dos Campos. Com a desapropriação sofrida pela Granja Shigueno em São José dos Campos, voltou-se o visionário Haruo Shigueno para a cidade de Tatuí, onde por volta de 1970 começou a montar sua granja."
+    },
+    {
+      "key": "about_diversification",
+      "value": "Com a produção de ovos em maior escala, surgiu o esterco das aves e porque não aproveitá-lo para a citricultura? Foi aí que se iniciou, já em 1975, quando pouco se falava em adubação orgânica, iniciou-se a fertilização da terra com o esterco das galinhas em pomares de citricultura. Posteriormente estendeu a área de citros também para Buri - SP e cafeicultura em Itaí - SP, conseguindo graças à adubação orgânica uma produtividade invejável."
+    },
+    {
+      "key": "contact_email",
+      "value": "sac@shigueno.com.br"
+    },
+    {
+      "key": "contact_phone",
+      "value": "(15) 3259-9710"
+    }
+  ]
+}
