@@ -4,6 +4,7 @@ import {
   Search, Calendar, Eye, ArrowLeft, User, Instagram, Tag, ArrowRight, 
   Share2, MessageSquare, Check, Mail, Clock, Heart, Copy
 } from 'lucide-react';
+import { useLanguage } from '../LanguageContext';
 
 interface BlogPost {
   id: number;
@@ -36,7 +37,133 @@ interface BlogAuthor {
   avatar_url: string;
 }
 
+const localizedTexts = {
+  pt: {
+    postViews: 'visualizações',
+    postReadTime: 'min de leitura',
+    copiedFeedback: 'Link copiado para a área de transferência!',
+    backToList: 'Voltar para Lista de Artigos',
+    likeSupported: 'Gostou!',
+    likeSupport: 'Apoiar Artigo',
+    shareLabel: 'Compartilhar:',
+    newsletterTitle: 'Informativo Shigueno',
+    newsletterDesc: 'Receba dicas de manejo aviário, agricultura familiar e novidades do agronegócio diretamente na sua caixa.',
+    newsletterPlaceholder: 'seu-email@provedor.com',
+    newsletterSuccess: 'Inscrição Confirmada!',
+    newsletterBtn: 'Inscrever-se',
+    recommendedTitle: 'Recomendado para Você',
+    bannerTag: 'Blog do Grupo Shigueno',
+    bannerTitlePart1: 'Semeando Conexões,',
+    bannerTitlePart2: 'Nutrindo a Terra.',
+    bannerDesc: 'Descubra artigos exclusivos, inovações tecnológicas no agronegócio, dicas de manejo ecológico e acompanhe o legado da família Shigueno desde 1932.',
+    searchPlaceholder: 'Pesquise por título, palavras ou tags...',
+    foundCount: 'Sistemas Shigueno identificaram',
+    articlesText: 'artigos',
+    allCategories: 'Todos os Assuntos',
+    loadingDb: 'Buscando banco de dados...',
+    noArticlesTitle: 'Nenhum artigo encontrado',
+    noArticlesDesc: 'Tente ajustar termos na barra de busca ou trocar a categoria selecionada.',
+    featuredTag: 'Destaque',
+    readFull: 'Ler Artigo Completo',
+    heritageTitle: 'Grupo Shigueno',
+    heritageSub: 'Tradição & Inovação',
+    heritageDesc: 'Pioneiros na agricultura familiar em Tatuí, integrando processos circulares de adubação da nossa avicultura diretamente para o solo dos pomares de citros.',
+    heritageHq: 'Sede Central: Tatuí - SP',
+    newsletterSidebarDesc: 'Cadastre o seu e-mail corporativo para receber as análises de mercado, novidades da produção de ovos e relatórios de manejo Nelore.',
+    newsletterSidebarSuccess: 'Inscrição Confirmada com sucesso!',
+    editorialTitle: 'Nosso Corpo Editorial',
+    monthFormat: {
+      january: 'Janeiro', february: 'Fevereiro', march: 'Março', april: 'Abril',
+      may: 'Maio', june: 'Junho', july: 'Julho', august: 'Agosto',
+      september: 'Setembro', october: 'Outubro', november: 'Novembro', december: 'Dezembro'
+    }
+  },
+  en: {
+    postViews: 'views',
+    postReadTime: 'min read',
+    copiedFeedback: 'Link copied to clipboard!',
+    backToList: 'Back to Article List',
+    likeSupported: 'Liked!',
+    likeSupport: 'Support Article',
+    shareLabel: 'Share:',
+    newsletterTitle: 'Shigueno Newsletter',
+    newsletterDesc: 'Get tips on poultry management, family farming, and agribusiness news directly in your inbox.',
+    newsletterPlaceholder: 'your-email@provider.com',
+    newsletterSuccess: 'Subscription Confirmed!',
+    newsletterBtn: 'Subscribe',
+    recommendedTitle: 'Recommended for You',
+    bannerTag: 'Shigueno Group Blog',
+    bannerTitlePart1: 'Sowing Connections,',
+    bannerTitlePart2: 'Nutrining the Earth.',
+    bannerDesc: 'Discover exclusive articles, technological innovations in agribusiness, ecological management tips, and follow the legacy of the Shigueno family since 1932.',
+    searchPlaceholder: 'Search by title, keywords or tags...',
+    foundCount: 'Shigueno systems identified',
+    articlesText: 'articles',
+    allCategories: 'All Subjects',
+    loadingDb: 'Fetching database...',
+    noArticlesTitle: 'No articles found',
+    noArticlesDesc: 'Try adjusting terms in the search bar or changing the selected category.',
+    featuredTag: 'Featured',
+    readFull: 'Read Full Article',
+    heritageTitle: 'Shigueno Group',
+    heritageSub: 'Tradition & Innovation',
+    heritageDesc: 'Pioneers in family farming in Tatuí, integrating circular processes of poultry organic fertilization directly into citrus orchard soils.',
+    heritageHq: 'Headquarters: Tatuí - SP',
+    newsletterSidebarDesc: 'Enter your business email to receive market analysis, egg market updates, and Nelore cattle breeding reports.',
+    newsletterSidebarSuccess: 'Subscription confirmed successfully!',
+    editorialTitle: 'Our Editorial Board',
+    monthFormat: {
+      january: 'January', february: 'February', march: 'March', april: 'April',
+      may: 'May', june: 'June', july: 'July', august: 'August',
+      september: 'September', october: 'October', november: 'November', december: 'December'
+    }
+  },
+  es: {
+    postViews: 'visualizaciones',
+    postReadTime: 'min de lectura',
+    copiedFeedback: '¡Enlace copiado al portapapeles!',
+    backToList: 'Volver a la Lista de Artículos',
+    likeSupported: '¡Le gustó!',
+    likeSupport: 'Apoyar Artículo',
+    shareLabel: 'Compartir:',
+    newsletterTitle: 'Informativo Shigueno',
+    newsletterDesc: 'Reciba consejos sobre manejo avícola, agricultura familiar y novedades del agronegocio directamente en su buzón.',
+    newsletterPlaceholder: 'tu-correo@servidor.com',
+    newsletterSuccess: '¡Inscripción Confirmada!',
+    newsletterBtn: 'Suscribirse',
+    recommendedTitle: 'Recomendado para Usted',
+    bannerTag: 'Blog del Grupo Shigueno',
+    bannerTitlePart1: 'Sembrando Conexiones,',
+    bannerTitlePart2: 'Nutriendo la Tierra.',
+    bannerDesc: 'Descubra artículos exclusivos, innovaciones tecnológicas en el agronegocio, consejos de manejo ecológico y acompañe el legado de la familia Shigueno desde 1932.',
+    searchPlaceholder: 'Busque por título, palabras clave o etiquetas...',
+    foundCount: 'Los sistemas de Shigueno identificaron',
+    articlesText: 'artículos',
+    allCategories: 'Todos los Temas',
+    loadingDb: 'Buscando base de datos...',
+    noArticlesTitle: 'No se encontraron artículos',
+    noArticlesDesc: 'Intente ajustar los términos en la barra de búsqueda o cambiar la categoría seleccionada.',
+    featuredTag: 'Destacado',
+    readFull: 'Leer Artículo Completo',
+    heritageTitle: 'Grupo Shigueno',
+    heritageSub: 'Tradición e Innovación',
+    heritageDesc: 'Pioneros en agricultura familiar en Tatuí, integrando procesos circulares de abono orgánico de nuestra avicultura directamente en los suelos de huertos de cítricos.',
+    heritageHq: 'Sede Central: Tatuí - SP',
+    newsletterSidebarDesc: 'Registre su correo corporativo para recibir análisis de mercado, novedades de distribución de huevos y reportes Nelore.',
+    newsletterSidebarSuccess: '¡Suscripción confirmada con éxito!',
+    editorialTitle: 'Nuestro Cuerpo Editorial',
+    monthFormat: {
+      january: 'Enero', february: 'Febrero', march: 'Marzo', april: 'Abril',
+      may: 'Mayo', june: 'Junio', july: 'Julio', august: 'Agosto',
+      september: 'Septiembre', october: 'Octubre', november: 'Noviembre', december: 'Diciembre'
+    }
+  }
+};
+
 export default function BlogView() {
+  const { language, t } = useLanguage();
+  const tView = localizedTexts[language] || localizedTexts['pt'];
+  
   const [posts, setPosts] = React.useState<BlogPost[]>([]);
   const [categories, setCategories] = React.useState<BlogCategory[]>([]);
   const [authors, setAuthors] = React.useState<BlogAuthor[]>([]);
@@ -142,8 +269,22 @@ export default function BlogView() {
 
   const formatDate = (isoString: string) => {
     const d = new Date(isoString);
-    if (isNaN(d.getTime())) return 'Julho, 2026';
-    return d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+    if (isNaN(d.getTime())) return language === 'en' ? 'July, 2026' : language === 'es' ? 'Julio, 2026' : 'Julho, 2026';
+    
+    const monthNames = [
+      tView.monthFormat.january, tView.monthFormat.february, tView.monthFormat.march, tView.monthFormat.april,
+      tView.monthFormat.may, tView.monthFormat.june, tView.monthFormat.july, tView.monthFormat.august,
+      tView.monthFormat.september, tView.monthFormat.october, tView.monthFormat.november, tView.monthFormat.december
+    ];
+    
+    const day = d.getDate();
+    const month = monthNames[d.getMonth()];
+    const year = d.getFullYear();
+    
+    if (language === 'en') {
+      return `${month} ${day}, ${year}`;
+    }
+    return `${day} de ${month} de ${year}`;
   };
 
   // Filter out posts that are scheduled in the future (posso programar tbm uma postagem)
@@ -222,7 +363,7 @@ export default function BlogView() {
         {copyFeedback && (
           <div className="fixed bottom-6 right-6 z-50 bg-emerald-950 text-white font-bold px-5 py-3 rounded-xl shadow-lg flex items-center space-x-2 text-xs border border-emerald-600 animate-bounce">
             <Check className="w-4 h-4 text-emerald-400" />
-            <span>Link copiado para a área de transferência!</span>
+            <span>{tView.copiedFeedback}</span>
           </div>
         )}
 
@@ -250,7 +391,7 @@ export default function BlogView() {
               className="group inline-flex items-center space-x-2 text-slate-750 hover:text-emerald-855 font-bold text-xs transition-all bg-white px-4.5 py-2.5 rounded-full shadow-xs border border-slate-200/80 hover:border-emerald-200"
             >
               <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-              <span>Voltar para Lista de Artigos</span>
+              <span>{tView.backToList}</span>
             </button>
           </div>
 
@@ -276,12 +417,12 @@ export default function BlogView() {
 
                   <span className="flex items-center">
                     <Clock className="w-3.5 h-3.5 mr-1.5 text-slate-400" />
-                    {readTime} min de leitura
+                    {readTime} {tView.postReadTime}
                   </span>
 
                   <span className="flex items-center">
                     <Eye className="w-3.5 h-3.5 mr-1.5 text-slate-400" />
-                    {activePost.views || 0} visualizações
+                    {activePost.views || 0} {tView.postViews}
                   </span>
                 </div>
 
@@ -400,7 +541,7 @@ export default function BlogView() {
                       }`}
                     >
                       <Heart className={`w-4 h-4 transition-transform group-hover:scale-110 ${hasLiked ? 'fill-rose-500 text-rose-500 animate-pulse' : ''}`} />
-                      <span>{hasLiked ? 'Gostou!' : 'Apoiar Artigo'}</span>
+                      <span>{hasLiked ? tView.likeSupported : tView.likeSupport}</span>
                       <span className="w-px h-3 bg-slate-200"></span>
                       <span className="font-mono text-xs font-black">{likes}</span>
                     </button>
@@ -415,7 +556,7 @@ export default function BlogView() {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-xs font-bold text-slate-400 font-sans mr-1">Compartilhar:</span>
+                    <span className="text-xs font-bold text-slate-400 font-sans mr-1">{tView.shareLabel}</span>
                     <button
                       onClick={shareWhatsApp}
                       className="px-3.5 py-2 text-xs font-bold bg-[#25D366] hover:bg-[#20ba59] text-white rounded-xl transition-colors flex items-center space-x-1 cursor-pointer"
@@ -489,10 +630,10 @@ export default function BlogView() {
                 
                 <h4 className="font-extrabold text-emerald-950 text-sm mb-1.5 flex items-center">
                   <Mail className="w-4.5 h-4.5 mr-2 text-emerald-850 shrink-0" />
-                  <span>Informativo Shigueno</span>
+                  <span>{tView.newsletterTitle}</span>
                 </h4>
                 <p className="text-xs text-slate-550 leading-relaxed mb-4">
-                  Receba dicas de manejo aviário, agricultura familiar e novidades do agronegócio diretamente na sua caixa.
+                  {tView.newsletterDesc}
                 </p>
 
                 {newsletterSubscribed ? (
@@ -502,7 +643,7 @@ export default function BlogView() {
                     className="bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-xl p-3.5 text-center text-xs font-bold"
                   >
                     <Check className="w-4 h-4 mx-auto mb-1 text-emerald-700" />
-                    <span>Inscrição Confirmada!</span>
+                    <span>{tView.newsletterSuccess}</span>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubscribeNewsletter} className="space-y-3">
@@ -511,14 +652,14 @@ export default function BlogView() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="seu-email@provedor.com"
+                      placeholder={tView.newsletterPlaceholder}
                       className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-xs placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 transition-all bg-slate-50/60"
                     />
                     <button
                       type="submit"
                       className="w-full bg-emerald-850 hover:bg-emerald-950 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center transition-all shadow-xs cursor-pointer"
                     >
-                      <span>Inscrever-se</span>
+                      <span>{tView.newsletterBtn}</span>
                     </button>
                   </form>
                 )}
@@ -529,7 +670,7 @@ export default function BlogView() {
                 <div className="bg-white rounded-[24px] p-6 border border-slate-200/70 shadow-xs">
                   <h4 className="font-sans font-black text-emerald-950 text-sm mb-4 flex items-center">
                     <MessageSquare className="w-4 h-4 mr-2 text-emerald-750" />
-                    <span>Recomendado para Você</span>
+                    <span>{tView.recommendedTitle}</span>
                   </h4>
                   <div className="space-y-4">
                     {relatedPosts.map((related) => {
@@ -590,14 +731,14 @@ export default function BlogView() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
             <span className="px-3.5 py-1.5 bg-amber-500/20 border border-amber-500/30 text-amber-300 rounded-full text-xs font-bold tracking-widest uppercase inline-block mb-4">
-              Blog do Grupo Shigueno
+              {tView.bannerTag}
             </span>
             <h1 className="text-4xl md:text-6xl font-sans font-black tracking-tight leading-none text-white">
-              Cerrando Laços, <br />
-              <span className="text-amber-400">Nutrindo a Terra.</span>
+              {tView.bannerTitlePart1} <br />
+              <span className="text-amber-400">{tView.bannerTitlePart2}</span>
             </h1>
             <p className="mt-4 text-base md:text-lg text-emerald-100 font-medium max-w-2xl leading-relaxed">
-              Descubra artigos exclusivos, inovações tecnológicas no agronegócio, dicas de manejo ecológico e acompanhe o legado da família Shigueno desde 1932.
+              {tView.bannerDesc}
             </p>
           </div>
         </div>
@@ -615,14 +756,14 @@ export default function BlogView() {
                 <Search className="absolute left-3 top-3.5 w-4 h-4 text-slate-450" />
                 <input
                   type="text"
-                  placeholder="Pesquise por título, palavras ou tags..."
+                  placeholder={tView.searchPlaceholder}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 transition-all bg-slate-50/50"
                 />
               </div>
               <div className="text-xs text-slate-500 font-mono font-medium">
-                Sistemas Shigueno identificaram <span className="font-extrabold text-emerald-800">{filteredPosts.length}</span> artigos
+                {tView.foundCount} <span className="font-extrabold text-emerald-800">{filteredPosts.length}</span> {tView.articlesText}
               </div>
             </div>
 
@@ -636,7 +777,7 @@ export default function BlogView() {
                     : 'bg-white border border-emerald-100 text-slate-600 hover:bg-slate-50 hover:text-emerald-950'
                 }`}
               >
-                Todos os Assuntos
+                {tView.allCategories}
               </button>
               {categories.map((cat) => (
                 <button
@@ -657,12 +798,12 @@ export default function BlogView() {
             {isLoading ? (
               <div className="bg-white rounded-3xl p-16 border border-emerald-50 text-center shadow-sm">
                 <div className="inline-block w-8 h-8 rounded-full border-4 border-emerald-800/20 border-t-emerald-800 animate-spin mb-4" />
-                <p className="text-sm font-semibold text-slate-500 font-mono tracking-wide">Buscando banco de dados...</p>
+                <p className="text-sm font-semibold text-slate-500 font-mono tracking-wide">{tView.loadingDb}</p>
               </div>
             ) : filteredPosts.length === 0 ? (
               <div className="bg-white rounded-3xl p-16 border border-emerald-50 text-center shadow-sm">
-                <p className="text-base font-extrabold text-[#064e3b] mb-1">Nenhum artigo encontrado</p>
-                <p className="text-sm text-slate-500">Tente ajustar termos na barra de busca ou trocar a categoria selecionada.</p>
+                <p className="text-base font-extrabold text-[#064e3b] mb-1">{tView.noArticlesTitle}</p>
+                <p className="text-sm text-slate-500">{tView.noArticlesDesc}</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -690,7 +831,7 @@ export default function BlogView() {
                         )}
                         {post.is_featured && (
                           <span className="absolute top-4 right-4 bg-amber-500 text-amber-950 text-[10px] uppercase font-heavy tracking-wider py-1 px-3 rounded-full shadow-xs">
-                            Destaque
+                            {tView.featuredTag}
                           </span>
                         )}
                       </div>
@@ -705,7 +846,7 @@ export default function BlogView() {
                             </span>
                             <span className="flex items-center">
                               <Eye className="w-3.5 h-3.5 mr-1" />
-                              {post.views || 0} views
+                              {post.views || 0} {tView.postViews}
                             </span>
                           </div>
                           <h3 className="text-xl font-extrabold text-emerald-950 font-sans tracking-tight leading-snug line-clamp-2 group-hover:text-emerald-850 duration-200 transition-colors">
@@ -719,7 +860,7 @@ export default function BlogView() {
                         {/* Read action */}
                         <div className="pt-4 border-t border-slate-50 flex items-center justify-between">
                           <span className="text-xs text-emerald-850 font-extrabold group-hover:translate-x-1 duration-200 transition-all flex items-center">
-                            <span>Ler Artigo Completo</span>
+                            <span>{tView.readFull}</span>
                             <ArrowRight className="w-4.5 h-4.5 ml-1" />
                           </span>
                         </div>
@@ -740,16 +881,16 @@ export default function BlogView() {
               <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-500/10 rounded-full blur-2xl"></div>
               
               <h4 className="text-lg font-black font-sans uppercase tracking-tight text-white mb-2 leading-tight">
-                Grupo Shigueno
+                {tView.heritageTitle}
               </h4>
               <p className="text-[#a7f3d0] text-xs font-mono font-medium block uppercase tracking-widest mb-4">
-                Tradição & Inovação
+                {tView.heritageSub}
               </p>
               <p className="text-sm text-slate-200 leading-relaxed mb-4">
-                Pioneiros na agricultura familiar em Tatuí, integrando processos circulares de adubação da nossa avicultura diretamente para o solo dos pomares de citros.
+                {tView.heritageDesc}
               </p>
               <div className="text-[10px] text-slate-400 font-mono">
-                Sede Central: Tatuí - SP
+                {tView.heritageHq}
               </div>
             </div>
 
@@ -758,10 +899,10 @@ export default function BlogView() {
               <div className="absolute top-0 left-0 w-2 h-full bg-amber-500"></div>
               <h4 className="font-extrabold text-emerald-950 text-base mb-2 flex items-center">
                 <Mail className="w-5 h-5 mr-1.5 text-emerald-850 shrink-0" />
-                <span>Informativo Shigueno</span>
+                <span>{tView.newsletterTitle}</span>
               </h4>
               <p className="text-xs text-slate-550 leading-relaxed mb-5">
-                Cadastre o seu e-mail corporativo para receber as análises de mercado, novidades de fatias de ovos e relatórios de manejo Nelore.
+                {tView.newsletterSidebarDesc}
               </p>
 
               {newsletterSubscribed ? (
@@ -771,7 +912,7 @@ export default function BlogView() {
                   className="bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-xl p-4 text-center text-xs font-bold"
                 >
                   <Check className="w-4 h-4 mx-auto mb-1 text-emerald-700" />
-                  <span>Inscrição Confirmada com sucesso!</span>
+                  <span>{tView.newsletterSidebarSuccess}</span>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubscribeNewsletter} className="space-y-3">
@@ -781,7 +922,7 @@ export default function BlogView() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="seu-email@provedor.com"
+                      placeholder={tView.newsletterPlaceholder}
                       className="w-full px-3 py-2.5 border border-slate-205 rounded-xl text-xs placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition-colors"
                     />
                   </div>
@@ -789,7 +930,7 @@ export default function BlogView() {
                     type="submit"
                     className="w-full bg-emerald-850 hover:bg-emerald-950 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center transition-colors shadow-xs"
                   >
-                    <span>Inscrever-se</span>
+                    <span>{tView.newsletterBtn}</span>
                   </button>
                 </form>
               )}
@@ -798,7 +939,7 @@ export default function BlogView() {
             {/* Dynamic Blog Authors sidebar overview */}
             <div className="bg-white rounded-3xl p-6 border border-emerald-100 shadow-sm">
               <h4 className="font-extrabold text-emerald-950 text-base mb-4">
-                Nosso Corpo do Editorial
+                {tView.editorialTitle}
               </h4>
               <div className="space-y-4">
                 {authors.slice(0, 3).map((author) => (

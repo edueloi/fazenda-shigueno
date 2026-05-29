@@ -1,5 +1,6 @@
 import React from 'react';
-import { Menu, X, User, Heart, Leaf, Home, Info, Briefcase, Mail, LogOut, LayoutDashboard, ChevronRight, Newspaper } from 'lucide-react';
+import { Menu, X, User, Heart, Leaf, Home, Info, Briefcase, Mail, LogOut, LayoutDashboard, ChevronRight, Newspaper, Facebook, Linkedin, Instagram } from 'lucide-react';
+import { useLanguage } from '../LanguageContext';
 
 interface HeaderProps {
   currentView: string;
@@ -11,20 +12,93 @@ interface HeaderProps {
 
 export default function Header({ currentView, onNavigate, isLoggedIn, onLogout, siteSettings }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   const showBlog = siteSettings?.show_blog_on_menu !== 'false';
 
   const navItems = [
-    { key: 'home', label: 'Início', icon: Home, desc: 'Página inicial e pilares' },
-    { key: 'sobre', label: 'Sobre Nós', icon: Info, desc: 'História, legado e pioneirismo' },
-    { key: 'produtos', label: 'Nossa Produção', icon: Leaf, desc: 'Avicultura, Citros, Café e Nelore' },
-    ...(showBlog ? [{ key: 'blog', label: 'Blog', icon: Newspaper, desc: 'Artigos, notícias e novidades' }] : []),
-    { key: 'vagas', label: 'Trabalhe Conosco', icon: Briefcase, desc: 'Candidate-se e faça história' },
-    { key: 'contato', label: 'Contatos', icon: Mail, desc: 'Canais de atendimento, SAC' },
+    { key: 'home', label: t('nav.home'), icon: Home, desc: 'Página inicial e pilares' },
+    { key: 'sobre', label: t('nav.about'), icon: Info, desc: 'História, legado e pioneirismo' },
+    { key: 'produtos', label: t('nav.production'), icon: Leaf, desc: 'Avicultura, Citros, Café e Nelore' },
+    ...(showBlog ? [{ key: 'blog', label: t('nav.blog'), icon: Newspaper, desc: 'Artigos, notícias e novidades' }] : []),
+    { key: 'vagas', label: t('nav.careers'), icon: Briefcase, desc: 'Candidate-se e faça história' },
+    { key: 'contato', label: t('nav.contact'), icon: Mail, desc: 'Canais de atendimento, SAC' },
   ];
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-emerald-100 shadow-sm">
+      {/* Top Utility Bar with Social Media and Language flags */}
+      <div className="bg-slate-900 border-b border-slate-800 text-slate-300 py-1.5 px-4 sm:px-6 lg:px-8 select-none">
+        <div className="max-w-7xl mx-auto flex justify-between items-center h-5">
+          {/* Left: Social Media Networks */}
+          <div className="flex items-center space-x-3 text-slate-400">
+            <a href="https://www.facebook.com/shiguenotatui/" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors" title="Facebook">
+              <Facebook className="w-3.5 h-3.5" />
+            </a>
+            <a href="https://www.linkedin.com/company/grupo-shigueno" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors" title="LinkedIn">
+              <Linkedin className="w-3.5 h-3.5" />
+            </a>
+            <a href="https://www.instagram.com/fazshigueno/" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors" title="Instagram">
+              <Instagram className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          {/* Right: Flag Icons language selectors */}
+          <div className="flex items-center space-x-3 text-xs">
+            <div className="flex items-center space-x-2">
+              {/* Portuguese (Brazil flag SVG) */}
+              <button 
+                onClick={() => setLanguage('pt')} 
+                className={`flex items-center space-x-1.5 px-2 py-1 rounded transition-all ${language === 'pt' ? 'bg-emerald-850 text-amber-400 font-bold' : 'hover:bg-slate-800 text-slate-400'}`}
+                title="Português"
+              >
+                <svg viewBox="0 0 24 16" className="w-4.5 h-3 rounded-xs shrink-0 shadow-xs border border-white/10" aria-hidden="true">
+                  <rect width="24" height="16" fill="#009B3A" />
+                  <polygon points="12,2 2,8 12,14 22,8" fill="#FEDF00" />
+                  <circle cx="12" cy="8" r="3.5" fill="#002776" />
+                  <path d="M 8.5 8.5 Q 12 7.2 15.5 8.5 Q 12 7.7 8.5 8.5" fill="#FFFFFF" />
+                </svg>
+                <span className="text-[9px] font-mono font-extrabold tracking-wider">PT</span>
+              </button>
+
+              <span className="text-slate-800">|</span>
+
+              {/* English (USA flag SVG) */}
+              <button 
+                onClick={() => setLanguage('en')} 
+                className={`flex items-center space-x-1.5 px-2 py-1 rounded transition-all ${language === 'en' ? 'bg-emerald-850 text-amber-400 font-bold' : 'hover:bg-slate-800 text-slate-400'}`}
+                title="English"
+              >
+                <svg viewBox="0 0 24 16" className="w-4.5 h-3 rounded-xs shrink-0 shadow-xs border border-white/10" aria-hidden="true">
+                  <rect width="24" height="16" fill="#B22234" />
+                  <path d="M0,1.23H24M0,3.69H24M0,6.15H24M0,8.61H24M0,11.07H24M0,13.53H24" stroke="#FFFFFF" strokeWidth="1.23" />
+                  <rect width="10" height="8.61" fill="#3C3B6E" />
+                  <path d="M2,2h.1 M5,2h.1 M8,2h.1 M3.5,4h.1 M6.5,4h.1 M2,6h.1 M5,6h.1 M8,6h.1" stroke="#FFFFFF" strokeWidth="0.8" strokeLinecap="round" />
+                </svg>
+                <span className="text-[9px] font-mono font-extrabold tracking-wider">EN</span>
+              </button>
+
+              <span className="text-slate-800">|</span>
+
+              {/* Spanish (Spain flag SVG) */}
+              <button 
+                onClick={() => setLanguage('es')} 
+                className={`flex items-center space-x-1.5 px-2 py-1 rounded transition-all ${language === 'es' ? 'bg-emerald-850 text-amber-400 font-bold' : 'hover:bg-slate-800 text-slate-400'}`}
+                title="Español"
+              >
+                <svg viewBox="0 0 24 16" className="w-4.5 h-3 rounded-xs shrink-0 shadow-xs border border-white/10" aria-hidden="true">
+                  <rect width="24" height="16" fill="#C60B1E" />
+                  <rect width="24" height="8" y="4" fill="#FFC400" />
+                  <circle cx="6" cy="8" r="1.8" fill="#C60B1E" />
+                  <circle cx="6" cy="8" r="1.2" fill="#FFC400" />
+                </svg>
+                <span className="text-[9px] font-mono font-extrabold tracking-wider">ES</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           
@@ -59,7 +133,7 @@ export default function Header({ currentView, onNavigate, isLoggedIn, onLogout, 
                 Shigueno
               </span>
               <span className="text-[10px] font-mono text-emerald-600 tracking-wider font-semibold block mt-0.5">
-                Qualidade de Vida
+                {t('site.slogan')}
               </span>
             </div>
           </div>
@@ -96,14 +170,14 @@ export default function Header({ currentView, onNavigate, isLoggedIn, onLogout, 
                   onClick={() => onNavigate('admin')}
                   className="px-4 py-2 border border-emerald-300 text-emerald-800 text-sm font-semibold rounded-lg hover:bg-emerald-50 transition-colors"
                 >
-                  Painel Gestor
+                  {t('nav.manager_panel')}
                 </button>
                 <button
                   id="header-logout"
                   onClick={onLogout}
                   className="px-3 py-2 text-slate-500 hover:text-red-650 text-sm font-medium transition-colors"
                 >
-                  Sair
+                  {t('nav.logout')}
                 </button>
               </div>
             ) : (
@@ -113,7 +187,7 @@ export default function Header({ currentView, onNavigate, isLoggedIn, onLogout, 
                 className="flex items-center space-x-2 bg-emerald-750 text-white font-semibold text-sm px-4 py-2.5 rounded-lg shadow-sm hover:bg-emerald-850 hover:shadow transition-all"
               >
                 <User className="w-4 h-4" />
-                <span>Portal do Gestor</span>
+                <span>{t('nav.manager_portal')}</span>
               </button>
             )}
           </div>
@@ -221,7 +295,7 @@ export default function Header({ currentView, onNavigate, isLoggedIn, onLogout, 
                     className="w-full flex items-center justify-center space-x-2 bg-emerald-800 hover:bg-emerald-900 text-white py-2.5 px-4 rounded-xl text-xs font-bold shadow-xs transition-colors"
                   >
                     <LayoutDashboard className="w-3.5 h-3.5" />
-                    <span>Acessar Painel do Gestor</span>
+                    <span>{t('nav.manager_panel')}</span>
                   </button>
                   <button
                     onClick={() => {
@@ -231,7 +305,7 @@ export default function Header({ currentView, onNavigate, isLoggedIn, onLogout, 
                     className="w-full flex items-center justify-center space-x-2 border border-slate-250 text-slate-650 hover:bg-red-50 hover:text-red-700 py-2 rounded-xl text-xs font-semibold transition-colors"
                   >
                     <LogOut className="w-3.5 h-3.5" />
-                    <span>Sair da Sessão</span>
+                    <span>{t('nav.logout')}</span>
                   </button>
                 </div>
               ) : (
@@ -244,7 +318,7 @@ export default function Header({ currentView, onNavigate, isLoggedIn, onLogout, 
                   className="w-full flex items-center justify-center space-x-2 bg-emerald-800 hover:bg-emerald-900 text-white py-3 px-4 rounded-xl text-xs font-extrabold shadow-sm transition-all"
                 >
                   <User className="w-4 h-4" />
-                  <span>Portal do Gestor</span>
+                  <span>{t('nav.manager_portal')}</span>
                 </button>
               )}
             </div>
