@@ -10,6 +10,7 @@ import {
   CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell 
 } from 'recharts';
 import { Vacancy, Candidate, Supplier, DashboardStats } from '../types';
+import BlogManager from './BlogManager';
 
 interface AdminPanelProps {
   onLogout: () => void;
@@ -33,7 +34,7 @@ const PRESET_COORDS: Record<string, { lat: number; lng: number }> = {
 };
 
 export default function AdminPanel({ onLogout, onNavigate, onSettingsUpdate }: AdminPanelProps) {
-  const [activeSubTab, setActiveSubTab] = React.useState<'reports' | 'suppliers' | 'vacancies' | 'candidates' | 'tracking' | 'settings'>('reports');
+  const [activeSubTab, setActiveSubTab] = React.useState<'reports' | 'suppliers' | 'vacancies' | 'candidates' | 'tracking' | 'blog' | 'settings'>('reports');
   const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false);
 
   // Authenticated fetch helper to pass security middleware
@@ -684,6 +685,7 @@ export default function AdminPanel({ onLogout, onNavigate, onSettingsUpdate }: A
             { key: 'reports', label: 'Relatórios Gerais', icon: BarChart2 },
             { key: 'suppliers', label: 'Compra de Gado (MT)', icon: TrendingUp },
             { key: 'tracking', label: 'Rastreamento & Frotas', icon: Truck },
+            { key: 'blog', label: 'Gestor do Blog', icon: FileText },
             { key: 'vacancies', label: 'Cadastro de Vagas', icon: Briefcase },
             { key: 'candidates', label: 'Seleção & Currículos', icon: Users },
             { key: 'settings', label: 'Dados do Site', icon: Settings }
@@ -749,9 +751,10 @@ export default function AdminPanel({ onLogout, onNavigate, onSettingsUpdate }: A
               <h1 className="text-xs sm:text-sm font-black text-slate-800 tracking-tight leading-none mt-0.5">
                 {activeSubTab === 'reports' && 'Painel de Controle — Estatísticas'}
                 {activeSubTab === 'suppliers' && 'Pecuária Mato Grosso — Fornecedores'}
+                {activeSubTab === 'tracking' && 'Rastreamento de Transportes & Frotas'}
+                {activeSubTab === 'blog' && 'Console Editorial — Gerenciamento do Blog'}
                 {activeSubTab === 'vacancies' && 'Gestão de Oportunidades Empregatícias'}
                 {activeSubTab === 'candidates' && 'Recrutamento & Seleção de Talentos'}
-                {activeSubTab === 'tracking' && 'Rastreamento de Transportes & Frotas'}
                 {activeSubTab === 'settings' && 'Dados e Divulgação da Instituição'}
               </h1>
             </div>
@@ -2304,6 +2307,11 @@ export default function AdminPanel({ onLogout, onNavigate, onSettingsUpdate }: A
                   </div>
                 </form>
               </div>
+            )}
+
+            {/* SUBTAB GESTÃO DO BLOG */}
+            {activeSubTab === 'blog' && (
+              <BlogManager authFetch={authFetch} onSettingsUpdate={onSettingsUpdate} />
             )}
             
           </div>

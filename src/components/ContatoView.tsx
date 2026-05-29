@@ -8,6 +8,7 @@ interface ContatoViewProps {
 export default function ContatoView({ siteSettings }: ContatoViewProps) {
   const [sectorFilter, setSectorFilter] = React.useState('Todos');
   const [stateFilter, setStateFilter] = React.useState('Todos');
+  const [isMapLoading, setIsMapLoading] = React.useState(true);
   
   // Form state
   const [contName, setContName] = React.useState('');
@@ -316,7 +317,20 @@ export default function ContatoView({ siteSettings }: ContatoViewProps) {
           </div>
         </div>
 
-        <div className="lg:col-span-7 min-h-[350px] lg:min-h-[480px] w-full relative bg-slate-100">
+        <div className="lg:col-span-7 min-h-[350px] lg:min-h-[480px] w-full relative bg-slate-100 overflow-hidden rounded-2xl border border-slate-200/50 flex items-center justify-center">
+          {isMapLoading && (
+            <div className="absolute inset-0 bg-slate-50 flex flex-col items-center justify-center z-10 animate-pulse">
+              {/* Spinning/pulsating modern ring loader */}
+              <div className="relative w-12 h-12 flex items-center justify-center">
+                <div className="absolute w-12 h-12 border-4 border-emerald-800/20 rounded-full"></div>
+                <div className="absolute w-12 h-12 border-4 border-t-emerald-800 border-r-emerald-800 rounded-full animate-spin"></div>
+              </div>
+              <p className="text-xs font-bold text-slate-700 font-mono mt-4 tracking-widest uppercase animate-pulse">
+                Carregando Mapa de Tatuí...
+              </p>
+              <span className="text-[10px] text-slate-400 font-medium">Fazenda Nova Aliança</span>
+            </div>
+          )}
           <iframe
             id="gmap_canvas"
             src="https://maps.google.com/maps?q=Granja%20Shigueno,%20Tatu%C3%AD%20-%20SP&t=&z=14&ie=UTF8&iwloc=&output=embed"
@@ -324,9 +338,10 @@ export default function ContatoView({ siteSettings }: ContatoViewProps) {
             scrolling="no"
             marginHeight={0}
             marginWidth={0}
-            className="absolute inset-0 w-full h-full border-0"
+            className={`absolute inset-0 w-full h-full border-0 transition-opacity duration-700 ${isMapLoading ? 'opacity-0' : 'opacity-100'}`}
             title="Localização da Fazenda Shigueno no Google Maps"
             allowFullScreen
+            onLoad={() => setIsMapLoading(false)}
           ></iframe>
         </div>
       </div>

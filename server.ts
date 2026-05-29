@@ -14,6 +14,7 @@ import candidatesRouter from './server/routes/candidates.routes';
 import suppliersRouter from './server/routes/suppliers.routes';
 import dashboardRouter from './server/routes/dashboard.routes';
 import routesRouter from './server/routes/routes.routes';
+import blogRouter from './server/routes/blog.routes';
 
 async function startServer() {
   const app = express();
@@ -36,6 +37,7 @@ async function startServer() {
   app.use('/api', suppliersRouter);
   app.use('/api', dashboardRouter);
   app.use('/api', routesRouter);
+  app.use('/api', blogRouter);
 
   // Image proxy route for Sr. Haruo Shigueno's original image (avoids Mixed Content HTTP block in browser HTTPS iframe)
   app.get('/api/haruo-image', async (req, res) => {

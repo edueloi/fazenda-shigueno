@@ -17,6 +17,9 @@ interface DbData {
   suppliers: any[];
   site_settings: { key: string; value: string }[];
   routes?: any[];
+  blog_posts?: any[];
+  blog_categories?: any[];
+  blog_authors?: any[];
 }
 
 const DB_FILE = path.join(process.cwd(), 'shigueno_db.json');
@@ -35,11 +38,23 @@ class SafeJsonDb {
       candidates: [],
       suppliers: [],
       site_settings: [],
-      routes: []
+      routes: [],
+      blog_posts: [],
+      blog_categories: [],
+      blog_authors: []
     };
     this.load();
     if (!this.data.routes) {
       this.data.routes = [];
+    }
+    if (!this.data.blog_posts) {
+      this.data.blog_posts = [];
+    }
+    if (!this.data.blog_categories) {
+      this.data.blog_categories = [];
+    }
+    if (!this.data.blog_authors) {
+      this.data.blog_authors = [];
     }
   }
 
@@ -48,6 +63,19 @@ class SafeJsonDb {
       if (fs.existsSync(DB_FILE)) {
         const fileContent = fs.readFileSync(DB_FILE, 'utf8');
         this.data = JSON.parse(fileContent);
+
+        // Ensure new structures are initialized
+        if (!this.data.routes) this.data.routes = [];
+        if (!this.data.blog_posts) this.data.blog_posts = [];
+        if (!this.data.blog_categories) this.data.blog_categories = [];
+        if (!this.data.blog_authors) this.data.blog_authors = [];
+
+        // Seed default blog settings and categories/authors/posts if empty
+        if (!this.data.blog_categories || this.data.blog_categories.length === 0) {
+          this.seedBlogDefaults();
+          this.save();
+        }
+
         console.log('Banco de dados carregado com sucesso do disco!');
         return;
       }
@@ -57,6 +85,8 @@ class SafeJsonDb {
     
     // Seed default data if file does not exist or is corrupt
     this.seedDefaults();
+    this.seedBlogDefaults();
+    this.save();
   }
 
   private save() {
@@ -607,10 +637,202 @@ class SafeJsonDb {
 
     return { lastID: 0, changes: 0 };
   }
+
+  public seedBlogDefaults() {
+    this.data.blog_categories = [
+      { id: 1, name: 'Avicultura Moderna', description: 'Tudo sobre manejo de postura, qualidade de ovos e biosseguridade.' },
+      { id: 2, name: 'Citricultura Sustentável', description: 'Técnicas de cultivo de laranja e limão com adubação orgânica.' },
+      { id: 3, name: 'Cafeicultura de Altitude', description: 'Práticas de colheita sustentável e produção de café especial.' },
+      { id: 4, name: 'Pecuária Nelore', description: 'Cria e recria de gado Nelore com máxima dignidade nas pastagens do MT.' },
+      { id: 5, name: 'Sustentabilidade Rural', description: 'Adubação orgânica, conservação do solo e preservação de mananciais.' }
+    ];
+
+    this.data.blog_authors = [
+      { id: 1, name: 'Haruo Shigueno Junior', role: 'Diretor de Operações', bio: 'Neto do fundador Haruo Shigueno, dedicado à expansão das tecnologias agrícolas do Grupo Shigueno.', instagram: '@haruoshiguenojr', avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' },
+      { id: 2, name: 'Dra. Aline Shigueno', role: 'Médica Veterinária', bio: 'Especialista em manejo gentil e sanidade animal, encarregada do plantel Nelore e do controle geral das aves.', instagram: '@aline_shigueno', avatar_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80' },
+      { id: 3, name: 'Eng. Agrônomo Lucas Mendes', role: 'Gestor de Culturas', bio: 'Mestre em solos e nutrição de plantas. Coordenador de adubação sustentável na Fazenda Nova Aliança.', instagram: '@lucasmendes.agro', avatar_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80' }
+    ];
+
+    this.data.blog_posts = [
+      {
+        id: 1,
+        title: 'Como a Adubação Orgânica de Postura Revolucionou Nossos Pomares de Citros',
+        slug: 'adubacao-organica-revolucionou-pomares-citros',
+        excerpt: 'Desde 1975, o Grupo Shigueno utiliza o esterco das aves como fertilizante orgânico inovador, resultando em uma produtividade invejável e sustentável em Tatuí e Buri.',
+        content: `A história da nossa diversificação é pautada pela inteligência ecológica e economia circular pioneira. Quando na década de 1970 consolidamos a produção de ovos em Tatuí - SP, um desafio produtivo se transformou em uma oportunidade de ouro: o que fazer com o esterco decorrente do adubo natural das aves de postura?\n\nA resposta veio em 1975 na mente visionária de Haruo Shigueno. Ao invés de descartar o composto, iniciamos estudos e aplicações sistemáticas de fertilização orgânica em nossos pomares de citros. Esta prática, que na época era vista com ceticismo pela agricultura convencional, provou-se altamente eficiente.\n\n### Benefícios Observados na Citricultura Shigueno:\n\n1. **Enriquecimento Biológico do Solo:** Ao contrário dos fertilizantes sintéticos, o esterco de galinha enriquecido reativa a microfauna benéfica do solo, melhorando a absorção de nutrientes.\n2. **Retenção de Umidade:** Solos adubados organicamente retêm até 30% mais água, provendo resiliência crucial durante as estiagens na região de Buri.\n3. **Sanidade da Planta:** Pomares nutridos à base de composto orgânico exibem cutículas foliares mais espessas, reduzindo a incidência de fitopatógenos e pragas.\n\nHoje, nossa produtividade por hectare supera médias nacionais, comprovando que a preservação ecológica e a rentabilidade caminham de mãos dadas!`,
+        image_url: 'https://images.unsplash.com/photo-1557800636-894a64c1696f?w=800&auto=format&fit=crop&q=80',
+        category_id: 2,
+        author_id: 3,
+        status: 'Publicado',
+        views: 142,
+        published_at: '2026-05-10T12:00:00Z',
+        is_featured: true,
+        tags: 'citricultura,adubação orgânica,sustentabilidade,tatuí'
+      },
+      {
+        id: 2,
+        title: 'Qualidade do Ovo Shigueno: Do Galpão Climatizado até a Mesa em Horas',
+        slug: 'qualidade-do-ovo-shigueno-galpao-mesa-horas',
+        excerpt: 'Especialização, nutrição balanceada e triagem eletrônica precisa garantem a excelência que consolidou nossa marca de ovos na região desde 1970.',
+        content: `Na Granja Shigueno, cada detalhe no galpão é acompanhado com rigor científico. Nossas galinhas recebem uma ração balanceada exclusiva de grãos, complementada com minerais cruciais para que a casca do ovo seja altamente resistente e o interior possua coloração e sabor impecáveis.\n\n### A Jornada da Excelência:\n\n* **Coleta Delicada e Monitorada:** Os ovos são coletados com esteiras suaves, minimizando trincas microbianas.\n* **Classificação Eletrônica:** Contamos com equipamentos automatizados modernos que separam perfeitamente as classificações entre *Super Extra (Jumbo)*, *Extra*, *Grande*, *Médio* e *Pequeno*.\n* **Logística Integrada:** Nossos frotistas rastreados iniciam o transporte nas primeiras horas da manhã, garantindo que panificadoras e supermercados de Sorocaba, Tatuí e região recebam ovos frescos em tempo recorde.\n\nA tradição iniciada por Haruo Shigueno mantém-se ativa graças à inovação contínua e zelo de toda a nossa equipe técnica!`,
+        image_url: 'https://images.unsplash.com/photo-1506976785307-8732e854ad03?w=800&auto=format&fit=crop&q=80',
+        category_id: 1,
+        author_id: 1,
+        status: 'Publicado',
+        views: 89,
+        published_at: '2026-05-18T08:30:00Z',
+        is_featured: false,
+        tags: 'ovos,avicultura,tecnologia,frescor'
+      },
+      {
+        id: 3,
+        title: 'Manejo Gentil e Dignidade Animal na Criação de Bezerros Nelore no MT',
+        slug: 'manejo-gentil-dignidade-bezerros-nelore-mt',
+        excerpt: 'Como aplicamos técnicas de manejo racional para eliminar o estresse no rebanho, elevando as margens de recria com segurança veterinária no Mato Grosso.',
+        content: `Nos limites de Santo Antônio do Leverger, no estado de Mato Grosso, nosso rebanho da raça Nelore é criado sob uma filosofia rígida de respeito e cuidado. Acreditamos que a produtividade está intrinsecamente ligada ao bem-estar do animal.\n\n### Princípios do Manejo Racional Shigueno:\n\n* **Zero Violência ou Gritos:** Os campeiros são treinados para guiar o rebanho utilizando apenas linguagem corporal e toques gentis, eliminando o estresse.\n* **Pastoreio Rotacionado Intensivo:** As pastagens são divididas em piquetes gerenciados, garantindo pasto verde, volumoso fresco e tempo para reuniões de manejo.\n* **Nutrição Mineral Premium:** Cochos higienizados e cobertos fornecem suplementação de fósforo e oligoelementos essenciais para a saúde dos bezerros de recria.\n\nCom corpo veterinário contínuo, mantemos controle sob imunização sanitária contra febre aftosa e outras epizootias, garantindo que nossos parceiros de recria de Mato Grosso recebam lotes de bezerros saudáveis e de procedência idônea. Isso é pecuária com dignidade!`,
+        image_url: 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=800&auto=format&fit=crop&q=80',
+        category_id: 4,
+        author_id: 2,
+        status: 'Publicado',
+        views: 121,
+        published_at: '2026-05-22T15:00:00Z',
+        is_featured: false,
+        tags: 'nelore,mato grosso,pecuária,bem-estar animal'
+      }
+    ];
+
+    // Seed menu config if not present
+    const hasBlogMenuSetting = this.data.site_settings.some(s => s.key === 'show_blog_on_menu');
+    if (!hasBlogMenuSetting) {
+      this.data.site_settings.push({ key: 'show_blog_on_menu', value: 'true' });
+    }
+  }
+
+  public getBlogPosts() {
+    return this.data.blog_posts || [];
+  }
+  public getBlogCategories() {
+    return this.data.blog_categories || [];
+  }
+  public getBlogAuthors() {
+    return this.data.blog_authors || [];
+  }
+  public saveBlogPost(post: any) {
+    if (!this.data.blog_posts) this.data.blog_posts = [];
+    if (post.id) {
+      const idx = this.data.blog_posts.findIndex(p => Number(p.id) === Number(post.id));
+      if (idx !== -1) {
+        this.data.blog_posts[idx] = { ...this.data.blog_posts[idx], ...post };
+      } else {
+        this.data.blog_posts.push(post);
+      }
+    } else {
+      post.id = nextId(this.data.blog_posts);
+      post.views = 0;
+      this.data.blog_posts.push(post);
+    }
+    this.save();
+    return post;
+  }
+  public incrementPostViews(id: number) {
+    if (!this.data.blog_posts) return;
+    const post = this.data.blog_posts.find(p => Number(p.id) === Number(id));
+    if (post) {
+      post.views = (Number(post.views) || 0) + 1;
+      this.save();
+    }
+  }
+  public deleteBlogPost(id: number) {
+    if (!this.data.blog_posts) return false;
+    const initialLen = this.data.blog_posts.length;
+    this.data.blog_posts = this.data.blog_posts.filter(p => Number(p.id) !== Number(id));
+    this.save();
+    return this.data.blog_posts.length < initialLen;
+  }
+
+  public saveBlogAuthor(author: any) {
+    if (!this.data.blog_authors) this.data.blog_authors = [];
+    if (author.id) {
+      const idx = this.data.blog_authors.findIndex(a => Number(a.id) === Number(author.id));
+      if (idx !== -1) {
+        this.data.blog_authors[idx] = { ...this.data.blog_authors[idx], ...author };
+      } else {
+        this.data.blog_authors.push(author);
+      }
+    } else {
+      author.id = nextId(this.data.blog_authors);
+      this.data.blog_authors.push(author);
+    }
+    this.save();
+    return author;
+  }
+  public deleteBlogAuthor(id: number) {
+    if (!this.data.blog_authors) return false;
+    const initialLen = this.data.blog_authors.length;
+    this.data.blog_authors = this.data.blog_authors.filter(a => Number(a.id) !== Number(id));
+    this.save();
+    return this.data.blog_authors.length < initialLen;
+  }
+
+  public saveBlogCategory(cat: any) {
+    if (!this.data.blog_categories) this.data.blog_categories = [];
+    if (cat.id) {
+      const idx = this.data.blog_categories.findIndex(c => Number(c.id) === Number(cat.id));
+      if (idx !== -1) {
+        this.data.blog_categories[idx] = { ...this.data.blog_categories[idx], ...cat };
+      } else {
+        this.data.blog_categories.push(cat);
+      }
+    } else {
+      cat.id = nextId(this.data.blog_categories);
+      this.data.blog_categories.push(cat);
+    }
+    this.save();
+    return cat;
+  }
+  public deleteBlogCategory(id: number) {
+    if (!this.data.blog_categories) return false;
+    const initialLen = this.data.blog_categories.length;
+    this.data.blog_categories = this.data.blog_categories.filter(c => Number(c.id) !== Number(id));
+    this.save();
+    return this.data.blog_categories.length < initialLen;
+  }
 }
 
 const dbInstance = new SafeJsonDb();
 
 export async function getDb(): Promise<CustomDb> {
   return dbInstance;
+}
+
+// Module-level blog functions
+export async function getBlogPosts() {
+  return dbInstance.getBlogPosts();
+}
+export async function getBlogCategories() {
+  return dbInstance.getBlogCategories();
+}
+export async function getBlogAuthors() {
+  return dbInstance.getBlogAuthors();
+}
+export async function saveBlogPost(post: any) {
+  return dbInstance.saveBlogPost(post);
+}
+export async function incrementPostViews(id: number) {
+  return dbInstance.incrementPostViews(id);
+}
+export async function deleteBlogPost(id: number) {
+  return dbInstance.deleteBlogPost(id);
+}
+export async function saveBlogAuthor(author: any) {
+  return dbInstance.saveBlogAuthor(author);
+}
+export async function deleteBlogAuthor(id: number) {
+  return dbInstance.deleteBlogAuthor(id);
+}
+export async function saveBlogCategory(cat: any) {
+  return dbInstance.saveBlogCategory(cat);
+}
+export async function deleteBlogCategory(id: number) {
+  return dbInstance.deleteBlogCategory(id);
 }

@@ -26,6 +26,16 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 @keyframes spinSlow {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -47,7 +57,20 @@
   100% { left: 110%; width: 50%; }
 }
 
+@keyframes subtleFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(0.8deg); }
+}
+
 /* Micro-animations and interaction constraints */
+.animate-slide-up {
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 .animate-spin-slow {
   animation: spinSlow 12s linear infinite;
 }
@@ -62,6 +85,24 @@
 
 .animate-infinite-loading {
   animation: infiniteLoading 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-subtle-float {
+  animation: subtleFloat 4s ease-in-out infinite;
+}
+
+/* Image zoom-on-hover triggers */
+.image-zoom-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.image-zoom-container img {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+}
+
+.image-zoom-container:hover img {
+  transform: scale(1.06);
 }
 
 /* Desktop action pointer fallback */

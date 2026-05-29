@@ -126,7 +126,15 @@ export default function Footer({ onNavigate, siteSettings }: FooterProps) {
             Copyright © Mituaki Shigueno. Todos os direitos reservados.
             <br className="sm:hidden" />
             <span className="hidden sm:inline"> | </span>
-            Desenvolvido com técnicas de adubação orgânica e preservação ecológica.
+            Desenvolvido por{' '}
+            <a 
+              href="http://www.develoi.com.br" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="font-black underline text-emerald-300 hover:text-amber-400 transition-colors"
+            >
+              Develoi Soluções Digitais
+            </a>
           </p>
           <div className="flex space-x-4">
             <span className="hover:text-white transition-colors cursor-pointer" onClick={() => onNavigate('sobre')}>Institucional</span>

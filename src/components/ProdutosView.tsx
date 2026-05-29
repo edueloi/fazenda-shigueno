@@ -121,12 +121,21 @@ export default function ProdutosView({ activeTab: propActiveTab, onTabChange, si
                   💡 <strong>Compromisso de Frescor:</strong> Graças à logística integrada com as nossas frotas, as entregas são feitas no mesmo dia da coleta para os principais centros de abastecimento paulistas.
                 </div>
               </div>
-              <div className="lg:col-span-5 bg-gradient-to-br from-amber-50 to-amber-100/40 p-6 rounded-2xl border border-amber-100 flex flex-col items-center justify-center text-center space-y-3">
-                <Egg className="w-16 h-16 text-amber-500 animate-pulse" />
-                <h4 className="font-extrabold text-slate-900">Capacidade Operacional de Classificação</h4>
-                <p className="text-xs text-slate-600">
-                  Linhas de empacotamento com inspeção por ovoscopia, banho desinfetante ultrassônico e divisão volumétrica exata de calibres regulados.
-                </p>
+              <div className="lg:col-span-5 relative rounded-2xl overflow-hidden border border-amber-200 shadow-xs h-64 group image-zoom-container">
+                <img 
+                  src="https://images.unsplash.com/photo-1506976785307-8732e854ad03?auto=format&fit=crop&w=800&q=80"
+                  alt="Avicultura Shigueno"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent flex flex-col justify-end p-5 text-white">
+                  <div className="inline-flex items-center space-x-1.5 self-start bg-amber-500/95 text-slate-950 font-black px-2.5 py-1 rounded text-[10px] uppercase mb-1.5">
+                    <Egg className="w-3.5 h-3.5" />
+                    <span>Linhagem Premium</span>
+                  </div>
+                  <h4 className="font-black text-sm text-amber-300 drop-shadow">Fazenda Nova Aliança</h4>
+                  <p className="text-[11px] text-amber-100/95 leading-relaxed font-medium">Tecnologia avançada de ovoscopia eletrônica controlada em Tatuí-SP com frescor absoluto no mesmo dia.</p>
+                </div>
               </div>
             </div>
 
@@ -170,14 +179,21 @@ export default function ProdutosView({ activeTab: propActiveTab, onTabChange, si
                   ✓ <strong>Estimativa de Campo:</strong> Nossos técnicos realizam exames de reteramento de frutos e análises climáticas sazonais de campo para obter a produtividade e datas exatas de doçura máxima antes da colheita seletiva manual.
                 </p>
               </div>
-              <div className="lg:col-span-4 bg-emerald-50 px-6 py-8 rounded-2xl border border-emerald-200">
-                <h4 className="text-sm font-extrabold text-emerald-900 flex items-center mb-1">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  Pomares Sazonais
-                </h4>
-                <p className="text-xs text-emerald-800 leading-relaxed">
-                  Nosso calendário de colheita cobre praticamente os 12 meses do ano através da rotação de 13 variedades específicas de laranjas e tangerinas de mesa ou suco.
-                </p>
+              <div className="lg:col-span-4 relative rounded-2xl overflow-hidden border border-emerald-200 shadow-xs h-64 group image-zoom-container">
+                <img 
+                  src="https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?auto=format&fit=crop&w=800&q=80"
+                  alt="Citricultura Shigueno"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex flex-col justify-end p-5 text-white">
+                  <div className="inline-flex items-center space-x-1.5 self-start bg-emerald-700 text-white font-black px-2.5 py-1 rounded text-[10px] uppercase mb-1.5">
+                    <Calendar className="w-3.5 h-3.5 hover:scale-110 transition-transform" />
+                    <span>Pomares Sazonais</span>
+                  </div>
+                  <h4 className="font-black text-sm text-amber-300 drop-shadow">Harvest do Ano Todo</h4>
+                  <p className="text-[11px] text-emerald-100/95 leading-relaxed font-medium">Laranjas e tangerinas polidas, nutridas puramente com o próprio adubo aviário da Fazenda.</p>
+                </div>
               </div>
             </div>
 
@@ -284,10 +300,21 @@ export default function ProdutosView({ activeTab: propActiveTab, onTabChange, si
                   <span className="px-2.5 py-1 bg-amber-50 text-amber-800 font-mono text-xs font-bold rounded">Fazenda Bela Vista</span>
                 </div>
               </div>
-              <div className="lg:col-span-4 bg-amber-100/30 p-6 rounded-2xl border border-amber-200 text-center flex flex-col items-center">
-                <Coffee className="w-12 h-12 text-[#8B5A2B] mb-2" />
-                <h4 className="text-sm font-bold text-slate-900">Grãos Selecionados de Altitude</h4>
-                <p className="text-[11px] text-slate-600 mt-1">Colheita rigorosa focada no zênite de maturação da cereja, seguido de terreiro suspenso ecológico.</p>
+              <div className="lg:col-span-4 relative rounded-2xl overflow-hidden border border-amber-300 shadow-xs h-64 group image-zoom-container">
+                <img 
+                  src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
+                  alt="Cafeicultura Shigueno"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex flex-col justify-end p-5 text-white">
+                  <div className="inline-flex items-center space-x-1.5 self-start bg-[#8B5A2B] text-white font-black px-2.5 py-1 rounded text-[10px] uppercase mb-1.5">
+                    <Coffee className="w-3.5 h-3.5" />
+                    <span>Altitude Itaí</span>
+                  </div>
+                  <h4 className="font-black text-sm text-amber-300 drop-shadow">Café Arábica Seletivo</h4>
+                  <p className="text-[11px] text-amber-100/95 leading-relaxed font-medium">Grãos colhidos no zênite exato da maturação da cereja, com secagem lenta em terreiro ecológico.</p>
+                </div>
               </div>
             </div>
 
@@ -327,10 +354,21 @@ export default function ProdutosView({ activeTab: propActiveTab, onTabChange, si
                   🤝 <strong>Fornecedores Locais MT:</strong> Gerenciamos uma ampla rede de parceiros de recria no Mato Grosso, impulsionando a economia da microrregião pantaneira e garantindo origens idôneas do berço de bezerros Nelore.
                 </div>
               </div>
-              <div className="lg:col-span-4 bg-neutral-100/60 p-6 rounded-2xl border border-neutral-250 flex flex-col items-center text-center">
-                <MapPin className="w-8 h-8 text-emerald-800 mb-1" />
-                <h4 className="text-sm font-bold text-slate-900">4 Fazendas em Leverger - MT</h4>
-                <p className="text-xs text-slate-500 mt-1">Confinamentos e pastagens unificadas para cria equilibrada e gado ecologicamente monitorado.</p>
+              <div className="lg:col-span-4 relative rounded-2xl overflow-hidden border border-emerald-300 shadow-xs h-64 group image-zoom-container">
+                <img 
+                  src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=800&q=80"
+                  alt="Nelore Shigueno"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex flex-col justify-end p-5 text-white">
+                  <div className="inline-flex items-center space-x-1.5 self-start bg-emerald-800 text-white font-black px-2.5 py-1 rounded text-[10px] uppercase mb-1.5">
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span>Santo Antônio do Leverger</span>
+                  </div>
+                  <h4 className="font-black text-sm text-yellow-300 drop-shadow">4 Fazendas Modelo</h4>
+                  <p className="text-[11px] text-emerald-100/95 leading-relaxed font-medium">Rebanhos de cria e recria em pastos monitorados por veterinária contínua e imensa dignidade animal.</p>
+                </div>
               </div>
             </div>
 

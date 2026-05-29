@@ -17,48 +17,57 @@ export default function HomeView({ onNavigate, siteSettings }: HomeViewProps) {
       description: 'Produção diária de 6 tamanhos seletivos de ovos na Fazenda Nova Aliança, com rigorosos padrões de higiene e classificação eletrônica qualificada.',
       icon: Egg,
       badge: 'Super Extra a Industrial',
-      bgColor: 'bg-amber-50',
+      bgColor: 'bg-amber-50/70',
       iconColor: 'text-amber-650',
       borderColor: 'border-amber-200',
-      tab: 'avicultura'
+      tab: 'avicultura',
+      image: 'https://images.unsplash.com/photo-1506976785307-8732e854ad03?auto=format&fit=crop&w=600&q=80'
     },
     {
       title: 'Citricultura Orgânica',
       description: 'Pioneirismo na fertilização orgânica do solo através de esterco aviário desde 1975. Produção de laranjas de mesa doces e tangerinas nobres colhidas o ano todo.',
       icon: Sprout,
       badge: '13 Variedades Calendário',
-      bgColor: 'bg-emerald-50',
+      bgColor: 'bg-emerald-50/70',
       iconColor: 'text-emerald-700',
       borderColor: 'border-emerald-250',
-      tab: 'citricultura'
+      tab: 'citricultura',
+      image: 'https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=600&q=80'
     },
     {
       title: 'Cafeicultura de Altitude',
       description: 'Cultivo especializado de Café Arábica no município de Itaí - SP (Fazendas Nova Esperança, Novo Horizonte e Bela Vista) com as mais renomadas linhagens.',
       icon: Leaf,
       badge: 'Café Arábica Seletivo',
-      bgColor: 'bg-amber-100/40',
+      bgColor: 'bg-amber-100/30',
       iconColor: 'text-[#8B5A2B]',
       borderColor: 'border-amber-300',
-      tab: 'cafeicultura'
+      tab: 'cafeicultura',
+      image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80'
     },
     {
       title: 'Pecuária de Corte (Nelore)',
       description: 'Cria e recria sob supervisão técnica especializada de rebanho bovino da raça Nelore em Santo Antônio do Leverger - MT, assegurando máxima dignidade e bem-estar animal.',
       icon: TrendingUp,
       badge: 'Nelore Premium MT',
-      bgColor: 'bg-[#f4f7f6]',
-      iconColor: 'text-emerald-900',
-      borderColor: 'border-neutral-200',
-      tab: 'agropecuaria'
+      bgColor: 'bg-[#fafcfa]',
+      iconColor: 'text-emerald-950',
+      borderColor: 'border-emerald-200',
+      tab: 'agropecuaria',
+      image: 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=800&q=80'
     }
   ];
 
   return (
     <div className="space-y-16 animate-fade-in">
       
-      {/* Banner / Hero Section with Green & Amber Atmosphere */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950 text-white py-24 px-4 sm:px-6 lg:px-8 shadow-inner border-b-8 border-amber-500">
+      {/* Banner / Hero Section with Green & Amber Atmosphere and real agricultural panoramic view */}
+      <section 
+        className="relative overflow-hidden bg-cover bg-center text-white py-24 px-4 sm:px-6 lg:px-8 shadow-inner border-b-8 border-amber-500 animate-scale-in"
+        style={{ 
+          backgroundImage: `linear-gradient(to bottom right, rgba(6, 70, 50, 0.96), rgba(2, 28, 20, 0.91)), url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1600&q=80')`
+        }}
+      >
         
         {/* Subtle geometric pattern */}
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px]"></div>
@@ -120,32 +129,44 @@ export default function HomeView({ onNavigate, siteSettings }: HomeViewProps) {
             return (
               <div 
                 key={idx} 
-                onClick={() => onNavigate('produtos', pillar.tab)}
-                className={`flex flex-col rounded-2xl border ${pillar.borderColor} ${pillar.bgColor} p-6 shadow-xs hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden group cursor-pointer`}
+                onClick={() => onNavigate('produtos', pillar.tab as any)}
+                className={`flex flex-col rounded-3xl border ${pillar.borderColor} ${pillar.bgColor} p-5 shadow-xs hover:shadow-xl transition-all duration-550 transform hover:-translate-y-1.5 relative overflow-hidden group cursor-pointer animate-scale-in`}
               >
-                <div className="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
+                <div className="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-full translate-x-8 -translate-y-8 group-hover:scale-125 transition-transform duration-500"></div>
                 
-                <div className="mb-4 inline-flex p-3.5 rounded-xl bg-white shadow-xs self-start">
-                  <IconComponent className={`w-7 h-7 ${pillar.iconColor}`} />
+                {/* Image background block with hover scale trigger */}
+                <div className="w-full h-36 rounded-2xl mb-4 overflow-hidden relative image-zoom-container border border-slate-200/20 shadow-xs">
+                  <img 
+                    src={pillar.image} 
+                    alt={pillar.title}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/40 via-transparent to-transparent"></div>
+                  
+                  {/* Category icon inside circle */}
+                  <div className="absolute bottom-3 left-3 inline-flex p-2.5 rounded-xl bg-white/95 text-slate-850 shadow-md backdrop-blur-xs">
+                    <IconComponent className={`w-5 h-5 ${pillar.iconColor}`} />
+                  </div>
                 </div>
 
-                <div className="mt-2">
-                  <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider bg-emerald-100/60 border border-emerald-200/40 px-2 py-0.5 rounded-md">
+                <div className="mt-1">
+                  <span className="text-[10px] font-bold text-emerald-850 uppercase tracking-wider bg-emerald-100/60 border border-emerald-200/40 px-2.5 py-1 rounded-md">
                     {pillar.badge}
                   </span>
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 font-sans mt-3 group-hover:text-emerald-800 transition-colors">
+                <h3 className="text-base font-extrabold text-slate-900 font-sans mt-3 group-hover:text-amber-700 transition-colors">
                   {pillar.title}
                 </h3>
 
-                <p className="text-sm text-slate-600 leading-relaxed mt-2.5 flex-grow">
+                <p className="text-xs text-slate-600 leading-relaxed mt-2 flex-grow">
                   {pillar.description}
                 </p>
 
-                <div className="mt-5 pt-4 border-t border-slate-200/40 flex items-center text-xs font-bold text-emerald-800">
-                  <span className="group-hover:mr-2 transition-all">Ver detalhes do setor</span>
-                  <ChevronRight className="w-3.5 h-3.5 opacity-100 transition-all text-amber-650" />
+                <div className="mt-5 pt-4 border-t border-slate-200/50 flex items-center justify-between text-xs font-bold text-emerald-850">
+                  <span className="group-hover:translate-x-1 transition-transform duration-300">Conhecer o Segmento</span>
+                  <ChevronRight className="w-3.5 h-3.5 transition-all text-amber-600 group-hover:translate-x-0.5" />
                 </div>
               </div>
             );
@@ -229,10 +250,10 @@ export default function HomeView({ onNavigate, siteSettings }: HomeViewProps) {
           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fec006_1px,transparent_1px)] [background-size:24px_24px]"></div>
           
           <div className="space-y-4 max-w-2xl relative z-10">
-            <span className="text-xs font-bold text-amber-400 tracking-wider uppercase font-mono bg-emerald-900/80 px-3 py-1 rounded-full border border-emerald-750">
+            <span className="inline-block text-xs font-extrabold text-amber-400 tracking-[0.08em] uppercase font-mono bg-emerald-900/90 px-3.5 py-1.5 rounded-full border border-emerald-700/60 shadow-xs mb-2">
               Trabalhe com a gente
             </span>
-            <h2 className="text-2xl sm:text-4.5xl font-extrabold tracking-tight leading-none">
+            <h2 className="text-2xl sm:text-4.5xl font-black tracking-tight leading-tight pt-1">
               Junte-se à Família Shigueno
             </h2>
             <p className="text-emerald-100 text-sm sm:text-base leading-relaxed">

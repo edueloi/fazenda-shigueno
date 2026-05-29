@@ -1,20 +1,24 @@
 import React from 'react';
-import { Menu, X, User, Heart, Leaf, Home, Info, Briefcase, Mail, LogOut, LayoutDashboard, ChevronRight } from 'lucide-react';
+import { Menu, X, User, Heart, Leaf, Home, Info, Briefcase, Mail, LogOut, LayoutDashboard, ChevronRight, Newspaper } from 'lucide-react';
 
 interface HeaderProps {
   currentView: string;
   onNavigate: (view: string) => void;
   isLoggedIn: boolean;
   onLogout: () => void;
+  siteSettings?: Record<string, string>;
 }
 
-export default function Header({ currentView, onNavigate, isLoggedIn, onLogout }: HeaderProps) {
+export default function Header({ currentView, onNavigate, isLoggedIn, onLogout, siteSettings }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
+  const showBlog = siteSettings?.show_blog_on_menu !== 'false';
 
   const navItems = [
     { key: 'home', label: 'Início', icon: Home, desc: 'Página inicial e pilares' },
     { key: 'sobre', label: 'Sobre Nós', icon: Info, desc: 'História, legado e pioneirismo' },
     { key: 'produtos', label: 'Nossa Produção', icon: Leaf, desc: 'Avicultura, Citros, Café e Nelore' },
+    ...(showBlog ? [{ key: 'blog', label: 'Blog', icon: Newspaper, desc: 'Artigos, notícias e novidades' }] : []),
     { key: 'vagas', label: 'Trabalhe Conosco', icon: Briefcase, desc: 'Candidate-se e faça história' },
     { key: 'contato', label: 'Contatos', icon: Mail, desc: 'Canais de atendimento, SAC' },
   ];
@@ -77,6 +81,7 @@ export default function Header({ currentView, onNavigate, isLoggedIn, onLogout }
                 }`}
               >
                 {item.key === 'produtos' && <Leaf className="inline w-3.5 h-3.5 mr-1 text-emerald-600 align-text-bottom" />}
+                {item.key === 'blog' && <Newspaper className="inline w-3.5 h-3.5 mr-1 text-emerald-600 align-text-bottom" />}
                 {item.label}
               </button>
             ))}

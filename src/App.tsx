@@ -8,6 +8,7 @@ import VagasView from './components/VagasView';
 import ContatoView from './components/ContatoView';
 import LoginView from './components/LoginView';
 import AdminPanel from './components/AdminPanel';
+import BlogView from './components/BlogView';
 import { SiteSettings } from './types';
 
 export default function App() {
@@ -16,7 +17,7 @@ export default function App() {
   const [user, setUser] = React.useState<any>(null);
   const [siteSettings, setSiteSettings] = React.useState<Record<string, string>>({});
   const [activeProductTab, setActiveProductTab] = React.useState<'avicultura' | 'citricultura' | 'cafeicultura' | 'agropecuaria'>('avicultura');
-  const [showSplash, setShowSplash] = React.useState<boolean>(true);
+  const [showSplash, setShowSplash] = React.useState<boolean>(false);
   const [isFadingOut, setIsFadingOut] = React.useState<boolean>(false);
 
   // Verify persistent admin session of Shigueno local storage on mount
@@ -28,19 +29,6 @@ export default function App() {
       setIsLoggedIn(true);
     }
     fetchSettings();
-
-    // Trigger splash fade out and final removal
-    const fadeTimer = setTimeout(() => {
-      setIsFadingOut(true);
-    }, 2000);
-    const removeTimer = setTimeout(() => {
-      setShowSplash(false);
-    }, 2450);
-
-    return () => {
-      clearTimeout(fadeTimer);
-      clearTimeout(removeTimer);
-    };
   }, []);
 
   const fetchSettings = async () => {
@@ -58,9 +46,21 @@ export default function App() {
   const handleLoginSuccess = (userData: any, token: string) => {
     localStorage.setItem('shigueno_user', JSON.stringify(userData));
     localStorage.setItem('shigueno_token', token);
-    setUser(userData);
-    setIsLoggedIn(true);
-    setCurrentView('admin'); // Automatically redirect to admin dashboard
+    
+    // Trigger spectacular dark-emerald secure portal loading transition
+    setShowSplash(true);
+    setIsFadingOut(false);
+    
+    setTimeout(() => {
+      setIsFadingOut(true);
+    }, 1900);
+    
+    setTimeout(() => {
+      setShowSplash(false);
+      setUser(userData);
+      setIsLoggedIn(true);
+      setCurrentView('admin'); // Gently transition to admin dashboard
+    }, 2350);
   };
 
   const handleLogout = () => {
@@ -86,23 +86,26 @@ export default function App() {
       {/* Spectacular Splash Entry Loader */}
       {showSplash && (
         <div 
-          className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-emerald-50/15 to-amber-50/10 transition-all duration-500 ease-in-out ${
+          className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-[#022c1e] to-[#041a12] transition-all duration-500 ease-in-out ${
             isFadingOut ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
           }`}
         >
-          <div className="relative flex flex-col items-center">
+          {/* Subtle light glowing core */}
+          <div className="absolute w-[450px] h-[450px] bg-emerald-550/10 rounded-full blur-[100px] pointer-events-none animate-pulse-glow"></div>
+          
+          <div className="relative flex flex-col items-center z-10">
             {/* Ambient gold/emerald background rings */}
-            <div className="absolute w-52 h-52 border border-dashed border-emerald-800/20 rounded-full animate-spin-slow"></div>
-            <div className="absolute w-60 h-60 border border-amber-500/10 rounded-full animate-pulse-glow"></div>
+            <div className="absolute w-56 h-56 border border-dashed border-emerald-500/20 rounded-full animate-spin-slow"></div>
+            <div className="absolute w-64 h-64 border border-dashed border-amber-500/15 rounded-full animate-pulse-glow"></div>
             
-            {/* Visual Emblem Representation of Shigueno (Scaled Up) */}
-            <div className="relative w-28 h-28 bg-emerald-800 rounded-b-3xl rounded-t-xl border-4 border-emerald-600 flex flex-col items-center justify-center shadow-xl overflow-hidden animate-bounce-soft">
+            {/* Visual Emblem Representation of Shigueno (Scaled Up & Animated) */}
+            <div className="relative w-32 h-32 bg-emerald-850 rounded-b-3xl rounded-t-xl border-4 border-amber-550 flex flex-col items-center justify-center shadow-[0_0_40px_rgba(4,120,87,0.3)] overflow-hidden animate-bounce-soft">
               {/* Oranges & Eggs pure CSS simulation */}
               <div className="flex space-x-1.5 justify-center mt-3 scale-110">
-                <span className="w-8 h-8 rounded-full bg-amber-500 block relative shadow">
+                <span className="w-8 h-8 rounded-full bg-amber-550 block relative shadow">
                   <span className="absolute -top-1 right-2 w-3 h-2 bg-green-600 rounded-full rotate-45"></span>
                 </span>
-                <span className="w-8 h-8 rounded-full bg-amber-500 block relative shadow">
+                <span className="w-8 h-8 rounded-full bg-amber-550 block relative shadow">
                   <span className="absolute -top-1 right-2 w-3 h-2 bg-green-600 rounded-full rotate-45"></span>
                 </span>
               </div>
@@ -112,27 +115,27 @@ export default function App() {
                 <span className="w-4.5 h-6.5 bg-white rounded-full block shadow-xs border border-gray-100"></span>
                 <span className="w-4.5 h-6.5 bg-white rounded-full block shadow-xs border border-gray-100"></span>
               </div>
-              <span className="text-[10px] font-mono font-black tracking-widest text-[#f5f5f5] mt-2 uppercase">1932</span>
+              <span className="text-[10px] font-mono font-black tracking-widest text-emerald-100 mt-2 uppercase">1932</span>
             </div>
 
             {/* Typography pair */}
-            <div className="text-center mt-8 space-y-1">
-              <span className="text-3xl font-sans font-black tracking-widest text-emerald-950 uppercase block leading-none">
+            <div className="text-center mt-8 space-y-1.5">
+              <span className="text-3xl font-sans font-black tracking-[0.25em] text-amber-400 uppercase block leading-none drop-shadow">
                 Shigueno
               </span>
-              <span className="text-xs font-mono text-emerald-600 tracking-widest font-bold block uppercase mt-1">
-                Qualidade de Vida
+              <span className="text-[11px] font-mono text-emerald-300 tracking-[0.3em] font-extrabold block uppercase mt-1">
+                Portal Administrativo
               </span>
             </div>
 
             {/* Glowing dynamic infinite action loading bar */}
-            <div className="w-36 h-1.5 bg-slate-200/60 rounded-full mt-8 overflow-hidden relative border border-slate-100/50">
-              <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-emerald-800 to-amber-500 rounded-full animate-infinite-loading w-16"></div>
+            <div className="w-44 h-1.5 bg-emerald-950 rounded-full mt-8 overflow-hidden relative border border-emerald-800/30">
+              <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-amber-500 via-emerald-400 to-amber-400 rounded-full animate-infinite-loading w-20"></div>
             </div>
 
             {/* Little sub-text badge */}
-            <p className="text-[10.5px] font-mono text-slate-400 font-bold tracking-wide mt-2.5 animate-pulse">
-              Conectando com o Campo...
+            <p className="text-[11px] font-mono text-emerald-400/80 font-bold tracking-widest mt-4 uppercase animate-pulse">
+              Homologando Acesso Seguro...
             </p>
           </div>
         </div>
@@ -145,6 +148,7 @@ export default function App() {
           onNavigate={handleNavigation} 
           isLoggedIn={isLoggedIn}
           onLogout={handleLogout}
+          siteSettings={siteSettings}
         />
       )}
 
@@ -157,6 +161,9 @@ export default function App() {
         )}
         {currentView === 'produtos' && (
           <ProdutosView activeTab={activeProductTab} onTabChange={setActiveProductTab} siteSettings={siteSettings} />
+        )}
+        {currentView === 'blog' && (
+          <BlogView />
         )}
         {currentView === 'vagas' && (
           <VagasView onNavigate={handleNavigation} />
