@@ -804,7 +804,7 @@ export default function BlogView() {
                 {authors.slice(0, 3).map((author) => (
                   <div key={author.id} className="flex items-center space-x-3 pb-3 border-b border-slate-50 last:border-0 last:pb-0">
                     <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-emerald-200">
-                      <img src={author.avatar_url} alt={author.name} className="w-full h-full object-cover" referrerpolicy="no-referrer" />
+                      <img src={author.avatar_url} alt={author.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                     </div>
                     <div>
                       <p className="text-xs font-bold text-slate-900 leading-none">{author.name}</p>

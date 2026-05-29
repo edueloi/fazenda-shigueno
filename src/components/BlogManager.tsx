@@ -550,7 +550,7 @@ export default function BlogManager({ authFetch, onSettingsUpdate }: BlogManager
                           <td className="py-3 px-4">
                             <div className="flex items-center space-x-3 max-w-sm">
                               <div className="w-10 h-10 rounded-md overflow-hidden bg-slate-100 shrink-0 select-none">
-                                <img src={post.image_url} alt="" className="w-full h-full object-cover" referrerpolicy="no-referrer" />
+                                <img src={post.image_url} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                               </div>
                               <div className="truncate">
                                 <p className="font-extrabold text-slate-800 truncate">{post.title}</p>
@@ -655,7 +655,7 @@ export default function BlogManager({ authFetch, onSettingsUpdate }: BlogManager
                   <div key={author.id} className="bg-slate-50/50 rounded-2xl p-5 border border-slate-150 flex flex-col justify-between">
                     <div className="flex items-start space-x-4 mb-4">
                       <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-slate-200 select-none">
-                        <img src={author.avatar_url} alt="" className="w-full h-full object-cover" referrerpolicy="no-referrer" />
+                        <img src={author.avatar_url} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                       </div>
                       <div className="flex-1 truncate">
                         <h4 className="font-extrabold text-slate-900 text-sm leading-none truncate">{author.name}</h4>
